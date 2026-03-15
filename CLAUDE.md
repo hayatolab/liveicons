@@ -54,10 +54,10 @@ SVGs live in `icons/<source>/<name>.svg`. Lucide is the primary/default source.
 ### Component API
 
 ```tsx
-<BellIcon animate="hover" speed="normal" size={24} color="currentColor" />
+<BellIcon animate="on-hover" speed="normal" size={24} color="currentColor" />
 ```
 
-- `animate`: `"hover"` | `"click"` | `"loop"` | `"once"` | `false`
+- `animate`: `"on-hover"` | `"on-click"` | `"loop"` | `"once"` | `false`
 - `speed`: `"slow"` | `"normal"` | `"fast"` | `number` (seconds)
   - Resolved by `resolveSpeed()` in `@liveicons/core`: slow=1.2s, normal=0.6s, fast=0.25s
 - `size`, `color`, `strokeWidth`, `className` + all HTMLDivElement props

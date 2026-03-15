@@ -13,50 +13,50 @@ Picks the right liveicon component + animate mode for a given UI concept.
 
 | Concept | Component | `animate` |
 |---------|-----------|-----------|
-| Notification | `BellIcon` | `"hover"` or `"click"` |
-| Success / confirm | `CheckIcon` | `"once"` or `"click"` |
-| Close / dismiss | `XIcon` | `"click"` |
+| Notification | `BellIcon` | `"on-hover"` or `"on-click"` |
+| Success / confirm | `CheckIcon` | `"once"` or `"on-click"` |
+| Close / dismiss | `XIcon` | `"on-click"` |
 | Loading | `LoaderIcon` | `"loop"` |
-| Search | `SearchIcon` | `"hover"` |
-| Settings | `SettingsIcon` | `"hover"` |
-| Delete | `TrashIcon` | `"hover"` |
-| Edit | `PencilIcon` | `"hover"` |
-| Download | `DownloadIcon` | `"click"` |
-| Upload | `UploadIcon` | `"click"` |
-| Share | `ShareIcon` | `"click"` |
-| Copy | `CopyIcon` | `"click"` |
-| Send / submit | `SendIcon` | `"click"` |
-| Like / love | `HeartIcon` | `"click"` |
-| Bookmark | `BookmarkIcon` | `"click"` |
-| Star / rate | `StarIcon` | `"click"` |
-| Navigate → | `ArrowRightIcon` | `"hover"` |
-| Navigate ← | `ArrowLeftIcon` | `"hover"` |
-| Expand up | `ArrowUpIcon` | `"hover"` |
-| Collapse down | `ArrowDownIcon` | `"hover"` |
-| Next / pagination | `ChevronRightIcon` | `"hover"` |
-| Dropdown | `ChevronDownIcon` | `"hover"` |
-| Home | `HomeIcon` | `"hover"` |
-| Menu / drawer | `MenuIcon` | `"click"` |
-| User / profile | `UserIcon` | `"hover"` |
-| Security / auth | `LockIcon` | `"click"` |
-| Show / hide | `EyeIcon` | `"click"` |
-| Dark mode | `MoonIcon` | `"click"` |
-| Light mode | `SunIcon` | `"click"` |
-| Warning | `AlertCircleIcon` | `"loop"` or `"hover"` |
-| Info | `InfoIcon` | `"hover"` |
-| Energy / speed | `ZapIcon` | `"hover"` |
-| Refresh / reload | `RefreshCwIcon` | `"click"` |
-| Add / create | `PlusIcon` | `"click"` |
-| Email | `MailIcon` | `"hover"` |
-| Volume | `Volume2Icon` | `"hover"` |
+| Search | `SearchIcon` | `"on-hover"` |
+| Settings | `SettingsIcon` | `"on-hover"` |
+| Delete | `TrashIcon` | `"on-hover"` |
+| Edit | `PencilIcon` | `"on-hover"` |
+| Download | `DownloadIcon` | `"on-click"` |
+| Upload | `UploadIcon` | `"on-click"` |
+| Share | `ShareIcon` | `"on-click"` |
+| Copy | `CopyIcon` | `"on-click"` |
+| Send / submit | `SendIcon` | `"on-click"` |
+| Like / love | `HeartIcon` | `"on-click"` |
+| Bookmark | `BookmarkIcon` | `"on-click"` |
+| Star / rate | `StarIcon` | `"on-click"` |
+| Navigate → | `ArrowRightIcon` | `"on-hover"` |
+| Navigate ← | `ArrowLeftIcon` | `"on-hover"` |
+| Expand up | `ArrowUpIcon` | `"on-hover"` |
+| Collapse down | `ArrowDownIcon` | `"on-hover"` |
+| Next / pagination | `ChevronRightIcon` | `"on-hover"` |
+| Dropdown | `ChevronDownIcon` | `"on-hover"` |
+| Home | `HomeIcon` | `"on-hover"` |
+| Menu / drawer | `MenuIcon` | `"on-click"` |
+| User / profile | `UserIcon` | `"on-hover"` |
+| Security / auth | `LockIcon` | `"on-click"` |
+| Show / hide | `EyeIcon` | `"on-click"` |
+| Dark mode | `MoonIcon` | `"on-click"` |
+| Light mode | `SunIcon` | `"on-click"` |
+| Warning | `AlertCircleIcon` | `"loop"` or `"on-hover"` |
+| Info | `InfoIcon` | `"on-hover"` |
+| Energy / speed | `ZapIcon` | `"on-hover"` |
+| Refresh / reload | `RefreshCwIcon` | `"on-click"` |
+| Add / create | `PlusIcon` | `"on-click"` |
+| Email | `MailIcon` | `"on-hover"` |
+| Volume | `Volume2Icon` | `"on-hover"` |
 
 ---
 
 ## animate Mode Decision
 
 ```
-Does the user click to trigger it? → "click"
-Does it activate on hover/focus?   → "hover"
+Does the user click to trigger it? → "on-click"
+Does it activate on hover/focus?   → "on-hover"
 Is it a loading/spinner state?     → "loop"
 Is it a one-time success badge?    → "once"
 Dense list / decorative?           → false
@@ -65,8 +65,8 @@ Dense list / decorative?           → false
 Key rules:
 - **Never** use `"loop"` on HeartIcon, StarIcon, CheckIcon — looping these is anxious
 - **Always** use `"loop"` for LoaderIcon — that's its only correct mode
-- `"hover"` for navigation icons (arrows, chevrons, home, menu)
-- `"click"` for action icons (send, copy, download, delete confirm)
+- `"on-hover"` for navigation icons (arrows, chevrons, home, menu)
+- `"on-click"` for action icons (send, copy, download, delete confirm)
 
 ---
 
@@ -114,7 +114,7 @@ Default to Lucide. Switch to `heroicons` for Tailwind-first projects. Never mix 
 ### Button with icon
 ```tsx
 import { SendIcon } from 'liveicons/react'
-<button><SendIcon animate="click" size={18} /> Send</button>
+<button><SendIcon animate="on-click" size={18} /> Send</button>
 ```
 
 ### Loading state
@@ -126,7 +126,7 @@ import { LoaderIcon } from 'liveicons/react'
 ### Theme toggle
 ```tsx
 import { SunIcon, MoonIcon } from 'liveicons/react'
-{isDark ? <SunIcon animate="click" size={20} /> : <MoonIcon animate="click" size={20} />}
+{isDark ? <SunIcon animate="on-click" size={20} /> : <MoonIcon animate="on-click" size={20} />}
 ```
 
 ### Imperative (programmatic trigger)
