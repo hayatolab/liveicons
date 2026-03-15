@@ -12,11 +12,19 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/light-bulb.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    scale: 1,
+    opacity: 1
+  },
   animate: {
     scale: [
       1,
-      1.05,
+      1.15,
+      1
+    ],
+    opacity: [
+      1,
+      0.8,
       1
     ]
   }
@@ -107,7 +115,9 @@ const LightBulbIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 250,
+  damping: 10
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

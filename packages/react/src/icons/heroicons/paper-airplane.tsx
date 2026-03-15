@@ -12,12 +12,20 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/paper-airplane.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    x: 0,
+    y: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.05,
-      1
+    x: [
+      0,
+      6,
+      0
+    ],
+    y: [
+      0,
+      -4,
+      0
     ]
   }
 };
@@ -107,7 +115,9 @@ const PaperAirplaneIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 300,
+  damping: 12
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

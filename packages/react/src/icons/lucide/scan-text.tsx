@@ -12,12 +12,15 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/scan-text.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    y: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.05,
-      1
+    y: [
+      0,
+      -4,
+      4,
+      0
     ]
   }
 };
@@ -107,7 +110,8 @@ const ScanTextIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.5,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

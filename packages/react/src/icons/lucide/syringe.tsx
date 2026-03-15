@@ -12,12 +12,20 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/syringe.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    rotate: 0,
+    y: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.05,
-      1
+    rotate: [
+      0,
+      -8,
+      0
+    ],
+    y: [
+      0,
+      2,
+      0
     ]
   }
 };
@@ -107,7 +115,8 @@ const SyringeIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.35,
+  ease: "easeOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

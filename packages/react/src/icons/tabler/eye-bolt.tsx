@@ -12,11 +12,13 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/eye-bolt.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    scaleY: 1
+  },
   animate: {
-    scale: [
+    scaleY: [
       1,
-      1.05,
+      0.1,
       1
     ]
   }
@@ -107,7 +109,8 @@ const EyeBoltIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.3,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

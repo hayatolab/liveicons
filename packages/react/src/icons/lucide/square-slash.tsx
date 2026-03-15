@@ -12,12 +12,15 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/square-slash.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    rotate: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.05,
-      1
+    rotate: [
+      0,
+      -15,
+      15,
+      0
     ]
   }
 };
@@ -107,7 +110,8 @@ const SquareSlashIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.35,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

@@ -12,12 +12,18 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/bell-ringing-2.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    rotate: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.05,
-      1
+    rotate: [
+      0,
+      -12,
+      12,
+      -8,
+      8,
+      -4,
+      0
     ]
   }
 };
@@ -103,7 +109,8 @@ const BellRinging2Icon = forwardRef<LiveIconHandle, LiveIconProps>(
           fill={color}
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.5,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

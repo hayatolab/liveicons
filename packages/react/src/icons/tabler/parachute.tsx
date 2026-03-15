@@ -12,12 +12,14 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/parachute.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    y: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.05,
-      1
+    y: [
+      0,
+      -6,
+      0
     ]
   }
 };
@@ -107,7 +109,9 @@ const ParachuteIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 150,
+  damping: 10
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

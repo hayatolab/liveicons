@@ -12,12 +12,15 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/paw-print.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    y: 0
+  },
   animate: {
-    scale: [
+    y: [
+      0,
+      -4,
       1,
-      1.05,
-      1
+      0
     ]
   }
 };
@@ -107,7 +110,9 @@ const PawPrintIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 280,
+  damping: 20
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

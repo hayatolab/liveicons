@@ -12,12 +12,24 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/fire.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    scale: 1,
+    y: 0
+  },
   animate: {
     scale: [
       1,
+      1.1,
+      0.95,
       1.05,
       1
+    ],
+    y: [
+      0,
+      -2,
+      1,
+      -1,
+      0
     ]
   }
 };
@@ -107,7 +119,8 @@ const FireIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.5,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

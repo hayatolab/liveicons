@@ -12,12 +12,14 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/transform-point-top-left.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    y: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.05,
-      1
+    y: [
+      0,
+      -4,
+      0
     ]
   }
 };
@@ -107,7 +109,10 @@ const TransformPointTopLeftIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 400,
+  damping: 15,
+  mass: 0.5
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

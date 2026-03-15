@@ -12,12 +12,17 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/soup.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    rotate: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.05,
-      1
+    rotate: [
+      0,
+      -5,
+      5,
+      -3,
+      3,
+      0
     ]
   }
 };
@@ -103,7 +108,8 @@ const SoupIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           fill={color}
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.5,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

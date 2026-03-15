@@ -12,8 +12,16 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/currency-guarani.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    y: 0,
+    scale: 1
+  },
   animate: {
+    y: [
+      0,
+      -4,
+      0
+    ],
     scale: [
       1,
       1.05,
@@ -107,7 +115,10 @@ const CurrencyGuaraniIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 400,
+  damping: 10,
+  mass: 0.5
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

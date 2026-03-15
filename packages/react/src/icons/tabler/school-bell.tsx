@@ -12,12 +12,18 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/school-bell.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    rotate: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.05,
-      1
+    rotate: [
+      0,
+      -15,
+      15,
+      -10,
+      10,
+      -5,
+      0
     ]
   }
 };
@@ -107,7 +113,8 @@ const SchoolBellIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.5,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

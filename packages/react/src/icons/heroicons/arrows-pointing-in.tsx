@@ -12,11 +12,13 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/arrows-pointing-in.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    scale: 1
+  },
   animate: {
     scale: [
       1,
-      1.05,
+      0.85,
       1
     ]
   }
@@ -107,7 +109,9 @@ const ArrowsPointingInIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 300,
+  damping: 15
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

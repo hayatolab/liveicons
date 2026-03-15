@@ -12,11 +12,13 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/arrow-autofit-height.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    scale: 1
+  },
   animate: {
     scale: [
       1,
-      1.05,
+      1.15,
       1
     ]
   }
@@ -103,7 +105,10 @@ const ArrowAutofitHeightIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           fill={color}
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 300,
+  damping: 15,
+  mass: 0.8
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

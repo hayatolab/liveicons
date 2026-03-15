@@ -12,11 +12,19 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/pound-sterling.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    y: 0,
+    scale: 1
+  },
   animate: {
+    y: [
+      0,
+      -3,
+      0
+    ],
     scale: [
       1,
-      1.05,
+      1.1,
       1
     ]
   }
@@ -107,7 +115,9 @@ const PoundSterlingIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 300,
+  damping: 20
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

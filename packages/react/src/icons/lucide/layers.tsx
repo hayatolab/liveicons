@@ -12,12 +12,15 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/layers.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    y: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.05,
-      1
+    y: [
+      0,
+      -2,
+      2,
+      0
     ]
   }
 };
@@ -107,7 +110,8 @@ const LayersIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.4,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

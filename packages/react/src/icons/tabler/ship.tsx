@@ -12,12 +12,24 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/ship.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    x: 0,
+    rotate: 0
+  },
   animate: {
-    scale: [
+    x: [
+      0,
+      3,
+      -3,
+      2,
+      0
+    ],
+    rotate: [
+      0,
+      3,
+      -3,
       1,
-      1.05,
-      1
+      0
     ]
   }
 };
@@ -107,7 +119,8 @@ const ShipIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.6,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

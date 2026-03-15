@@ -12,12 +12,20 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/pointer.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    x: 0,
+    y: 0
+  },
   animate: {
-    scale: [
+    x: [
+      0,
       1,
-      1.05,
-      1
+      0
+    ],
+    y: [
+      0,
+      2,
+      0
     ]
   }
 };
@@ -103,7 +111,9 @@ const PointerIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           fill={color}
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 400,
+  damping: 20
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

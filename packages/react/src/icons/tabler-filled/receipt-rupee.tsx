@@ -12,8 +12,16 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/receipt-rupee.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    y: 0,
+    scale: 1
+  },
   animate: {
+    y: [
+      0,
+      -6,
+      0
+    ],
     scale: [
       1,
       1.05,
@@ -103,7 +111,9 @@ const ReceiptRupeeIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           fill={color}
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 300,
+  damping: 10
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

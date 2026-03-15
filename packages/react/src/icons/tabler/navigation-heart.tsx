@@ -12,11 +12,15 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/navigation-heart.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    scale: 1
+  },
   animate: {
     scale: [
       1,
-      1.05,
+      1.3,
+      1,
+      1.15,
       1
     ]
   }
@@ -107,7 +111,8 @@ const NavigationHeartIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.5,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

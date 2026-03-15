@@ -16,7 +16,7 @@ const SVG_VARIANTS: Variants = {
   animate: {
     scale: [
       1,
-      1.05,
+      1.1,
       1
     ]
   }
@@ -107,7 +107,10 @@ const CandyIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 300,
+  damping: 20,
+  mass: 0.8
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

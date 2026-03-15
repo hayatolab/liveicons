@@ -12,12 +12,17 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/square-x.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    x: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.05,
-      1
+    x: [
+      0,
+      -3,
+      3,
+      -2,
+      2,
+      0
     ]
   }
 };
@@ -103,7 +108,8 @@ const SquareXIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           fill={color}
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.4,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

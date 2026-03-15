@@ -12,8 +12,18 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/zodiac-cancer.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    rotate: 0,
+    scale: 1
+  },
   animate: {
+    rotate: [
+      0,
+      10,
+      -10,
+      5,
+      0
+    ],
     scale: [
       1,
       1.05,
@@ -107,7 +117,8 @@ const ZodiacCancerIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.5,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

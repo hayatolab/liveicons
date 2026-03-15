@@ -12,12 +12,15 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/rat.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    x: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.05,
-      1
+    x: [
+      0,
+      3,
+      -1,
+      0
     ]
   }
 };
@@ -107,7 +110,9 @@ const RatIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 350,
+  damping: 20
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

@@ -12,10 +12,20 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/shuffle.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    x: 0,
+    scale: 1
+  },
   animate: {
+    x: [
+      0,
+      -3,
+      3,
+      0
+    ],
     scale: [
       1,
+      0.95,
       1.05,
       1
     ]
@@ -107,7 +117,8 @@ const ShuffleIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.4,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

@@ -12,11 +12,13 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/dna.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    scaleX: 1
+  },
   animate: {
-    scale: [
+    scaleX: [
       1,
-      1.05,
+      0.7,
       1
     ]
   }
@@ -107,7 +109,8 @@ const DnaIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.5,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

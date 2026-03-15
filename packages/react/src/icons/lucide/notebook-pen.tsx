@@ -12,12 +12,22 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/notebook-pen.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    x: 0,
+    y: 0
+  },
   animate: {
-    scale: [
+    x: [
+      0,
+      2,
+      -1,
+      0
+    ],
+    y: [
+      0,
+      -2,
       1,
-      1.05,
-      1
+      0
     ]
   }
 };
@@ -107,7 +117,8 @@ const NotebookPenIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.5,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

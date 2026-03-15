@@ -12,12 +12,24 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/wand-sparkles.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    scale: 1,
+    rotate: 0
+  },
   animate: {
     scale: [
       1,
-      1.05,
+      1.2,
+      0.9,
+      1.1,
       1
+    ],
+    rotate: [
+      0,
+      15,
+      -10,
+      5,
+      0
     ]
   }
 };
@@ -107,7 +119,8 @@ const WandSparklesIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.5,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

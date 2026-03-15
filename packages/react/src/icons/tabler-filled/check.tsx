@@ -11,37 +11,22 @@ import type { LiveIconProps, LiveIconHandle } from "../../types";
 import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/check.ts
-const PATH_VARIANTS: Variants = {
+const SVG_VARIANTS: Variants = {
   normal: {
-    opacity: 1,
-    pathLength: 1,
     scale: 1,
-    transition: {
-      duration: 0.3,
-      opacity: {
-        duration: 0.1
-      }
-    }
+    opacity: 1
   },
   animate: {
-    opacity: [
-      0,
-      1
-    ],
-    pathLength: [
-      0,
-      1
-    ],
     scale: [
-      0.6,
+      0.7,
+      1.15,
       1
     ],
-    transition: {
-      duration: 0.4,
-      opacity: {
-        duration: 0.1
-      }
-    }
+    opacity: [
+      0.5,
+      1,
+      1
+    ]
   }
 };
 
@@ -117,22 +102,26 @@ const CheckIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         onClick={handleClick}
         {...props}
       >
-        <svg
+        <motion.svg
+          animate={controls}
           xmlns="http://www.w3.org/2000/svg"
           width={size}
           height={size}
           viewBox="0 0 24 24"
           fill={color}
+          transition={{
+            ...{
+  type: "spring",
+  stiffness: 350,
+  damping: 18
+},
+            duration,
+            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
+          }}
+          variants={SVG_VARIANTS}
         >
-          <motion.path d="M20.707 6.293a1 1 0 0 1 0 1.414l-10 10a1 1 0 0 1 -1.414 0l-5 -5a1 1 0 0 1 1.414 -1.414l4.293 4.293l9.293 -9.293a1 1 0 0 1 1.414 0" 
-            animate={controls}
-            initial="normal"
-            variants={PATH_VARIANTS}
-            transition={{ ...{
-  duration: 0.4
-}, duration }}
-          />
-        </svg>
+          <path d="M20.707 6.293a1 1 0 0 1 0 1.414l-10 10a1 1 0 0 1 -1.414 0l-5 -5a1 1 0 0 1 1.414 -1.414l4.293 4.293l9.293 -9.293a1 1 0 0 1 1.414 0" />
+        </motion.svg>
       </div>
     );
   }

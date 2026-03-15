@@ -16,7 +16,7 @@ const SVG_VARIANTS: Variants = {
   animate: {
     scale: [
       1,
-      1.05,
+      1.1,
       1
     ]
   }
@@ -103,7 +103,10 @@ const BatteryVertical1Icon = forwardRef<LiveIconHandle, LiveIconProps>(
           fill={color}
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 300,
+  damping: 20,
+  mass: 0.8
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

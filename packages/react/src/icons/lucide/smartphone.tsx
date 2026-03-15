@@ -12,12 +12,19 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/smartphone.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    x: 0
+  },
   animate: {
-    scale: [
+    x: [
+      0,
+      -2,
+      2,
+      -2,
+      2,
+      -1,
       1,
-      1.05,
-      1
+      0
     ]
   }
 };
@@ -107,7 +114,8 @@ const SmartphoneIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.35,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

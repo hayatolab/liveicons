@@ -12,12 +12,14 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/submarine.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    x: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.05,
-      1
+    x: [
+      0,
+      5,
+      0
     ]
   }
 };
@@ -107,7 +109,9 @@ const SubmarineIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 200,
+  damping: 15
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

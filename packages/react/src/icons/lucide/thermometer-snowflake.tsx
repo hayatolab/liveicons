@@ -12,12 +12,20 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/thermometer-snowflake.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    scaleY: 1,
+    y: 0
+  },
   animate: {
-    scale: [
+    scaleY: [
       1,
-      1.05,
+      0.9,
       1
+    ],
+    y: [
+      0,
+      2,
+      0
     ]
   }
 };
@@ -107,7 +115,9 @@ const ThermometerSnowflakeIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 250,
+  damping: 15
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

@@ -12,12 +12,14 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/pacman.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    x: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.05,
-      1
+    x: [
+      0,
+      5,
+      0
     ]
   }
 };
@@ -103,7 +105,9 @@ const PacmanIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           fill={color}
           transition={{
             ...{
-  duration: 0.4
+  type: "spring",
+  stiffness: 300,
+  damping: 10
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

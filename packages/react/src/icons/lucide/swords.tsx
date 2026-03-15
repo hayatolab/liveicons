@@ -12,11 +12,23 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/swords.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    x: 0,
+    scale: 1
+  },
   animate: {
+    x: [
+      0,
+      -3,
+      3,
+      -2,
+      2,
+      0
+    ],
     scale: [
       1,
       1.05,
+      0.98,
       1
     ]
   }
@@ -107,7 +119,8 @@ const SwordsIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.4
+  duration: 0.4,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
