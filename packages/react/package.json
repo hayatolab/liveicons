@@ -34,6 +34,11 @@
       "import": "./dist/react/index.mjs",
       "require": "./dist/react/index.js"
     },
+    "./react/morphing": {
+      "types": "./dist/react/morphing/index.d.ts",
+      "import": "./dist/react/morphing/index.mjs",
+      "require": "./dist/react/morphing/index.js"
+    },
     "./react/*": {
       "types": "./dist/react/*/index.d.ts",
       "import": "./dist/react/*/index.mjs"

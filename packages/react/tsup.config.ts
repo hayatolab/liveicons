@@ -22,7 +22,10 @@ const sourceEntries = Object.fromEntries(
 export default defineConfig([
   // Main package entry: ESM + CJS (small, just re-exports lucide + types)
   {
-    entry: { "react/index": "src/index.ts" },
+    entry: {
+      "react/index": "src/index.ts",
+      "react/morphing/index": "src/morphing/index.ts",
+    },
     format: ["esm", "cjs"],
     dts: true,
     clean: true,

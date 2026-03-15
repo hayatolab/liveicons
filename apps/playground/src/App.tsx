@@ -1,4 +1,6 @@
 import { useState, useMemo, useCallback } from "react";
+import { MorphingIcon } from "liveicons/react/morphing";
+import type { MorphingIconName } from "liveicons/react/morphing";
 import * as LucideIcons from "liveicons/react";
 import * as HeroIcons from "liveicons/react/heroicons";
 import * as HeroSolidIcons from "liveicons/react/heroicons-solid";
@@ -86,10 +88,50 @@ export default function App() {
   color="${color}"
 />`;
 
+  const [morphIcon, setMorphIcon] = useState<MorphingIconName>("menu");
+
+  const MORPH_SEQUENCE: MorphingIconName[] = [
+    "menu", "close", "plus", "minus", "check", "more",
+    "arrow-right", "arrow-down", "arrow-left", "arrow-up",
+    "chevron-right", "chevron-down", "chevron-left", "chevron-up",
+  ];
+
   return (
     <>
       <h1>liveicons</h1>
       <p className="subtitle">Animated icon micro-interactions — playground</p>
+
+      {/* Morphing Icons Demo */}
+      <div style={{ marginBottom: "2rem" }}>
+        <h2 style={{ fontSize: "1rem", marginBottom: "0.75rem", opacity: 0.7 }}>
+          MorphingIcon — shape transforms, not crossfades
+        </h2>
+        <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", flexWrap: "wrap" }}>
+          <MorphingIcon icon={morphIcon} size={40} color={color} />
+          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+            {MORPH_SEQUENCE.map(name => (
+              <button
+                key={name}
+                onClick={() => setMorphIcon(name)}
+                style={{
+                  padding: "0.25rem 0.5rem",
+                  fontSize: "0.75rem",
+                  background: morphIcon === name ? "#60a5fa22" : "transparent",
+                  border: `1px solid ${morphIcon === name ? "#60a5fa" : "#444"}`,
+                  borderRadius: "4px",
+                  color: morphIcon === name ? "#60a5fa" : "#aaa",
+                  cursor: "pointer",
+                }}
+              >
+                {name}
+              </button>
+            ))}
+          </div>
+        </div>
+        <pre style={{ marginTop: "0.75rem", fontSize: "0.75rem", opacity: 0.5, background: "none", padding: 0 }}>
+          {`import { MorphingIcon } from 'liveicons/react/morphing'\n\n<MorphingIcon icon="${morphIcon}" size={40} />`}
+        </pre>
+      </div>
 
       {/* Controls */}
       <div className="controls">

@@ -1,0 +1,191 @@
+---
+title: Icon Design
+description: Pick the right liveicon for any UI concept — with the right animation mode.
+---
+
+# Icon Design
+
+The two decisions every icon needs:
+
+1. **Which icon** — the right symbol for the concept
+2. **Which animate mode** — the motion that matches the interaction
+
+---
+
+## Quick Reference
+
+| Concept | Component | `animate` | Notes |
+|---------|-----------|-----------|-------|
+| Notification / alert | `BellIcon` | `"hover"` or `"click"` | Ring shake signals urgency |
+| Success / confirmation | `CheckIcon` | `"once"` or `"click"` | Draw-in feels earned |
+| Close / dismiss | `XIcon` | `"click"` | Spin close |
+| Loading / processing | `LoaderIcon` | `"loop"` | Infinite spin |
+| Search | `SearchIcon` | `"hover"` | Circular sweep |
+| Settings / configure | `SettingsIcon` | `"hover"` | Quarter-spin |
+| Delete / destructive | `TrashIcon` | `"hover"` | Warning shake — hesitate before acting |
+| Edit / write | `PencilIcon` | `"hover"` | Write nudge |
+| Download / save | `DownloadIcon` | `"click"` | Bounce down |
+| Upload / push | `UploadIcon` | `"click"` | Bounce up |
+| Share / distribute | `ShareIcon` | `"click"` | Radiate out |
+| Copy | `CopyIcon` | `"click"` | Stack nudge |
+| Send / submit | `SendIcon` | `"click"` | Launch diagonal |
+| Like / love | `HeartIcon` | `"click"` | Heartbeat pop |
+| Bookmark | `BookmarkIcon` | `"click"` | Scale pop |
+| Star / rate | `StarIcon` | `"click"` | Pop + tilt |
+| Navigate → | `ArrowRightIcon` | `"hover"` | Nudge right — points where you'll go |
+| Navigate ← | `ArrowLeftIcon` | `"hover"` | Nudge left |
+| Expand / scroll up | `ArrowUpIcon` | `"hover"` | Nudge up |
+| Collapse / scroll down | `ArrowDownIcon` | `"hover"` | Nudge down |
+| Next / pagination | `ChevronRightIcon` | `"hover"` | Small nudge right |
+| Dropdown | `ChevronDownIcon` | `"hover"` | Small nudge down |
+| Home / root | `HomeIcon` | `"hover"` | Slight bounce |
+| Menu / drawer | `MenuIcon` | `"click"` | Horizontal expand |
+| User / profile | `UserIcon` | `"hover"` | Subtle bob |
+| Security / auth | `LockIcon` | `"click"` | Lock click |
+| Show / reveal | `EyeIcon` | `"click"` | Blink |
+| Dark mode | `MoonIcon` | `"click"` | Arc swing |
+| Light mode | `SunIcon` | `"click"` | Rotate rays |
+| Warning / alert | `AlertCircleIcon` | `"loop"` or `"hover"` | Pulse |
+| Info | `InfoIcon` | `"hover"` | Bounce |
+| Energy / speed | `ZapIcon` | `"hover"` | Flash |
+| Refresh / reload | `RefreshCwIcon` | `"click"` | Spin |
+| Add / create | `PlusIcon` | `"click"` | Scale pop + rotate 90° |
+| Email | `MailIcon` | `"hover"` | Wobble |
+| Volume | `Volume2Icon` | `"hover"` | Ripple out |
+
+---
+
+## Choosing `animate` Mode
+
+| Mode | When to use | Feel |
+|------|-------------|------|
+| `"hover"` | Primary action buttons, navigation links | Reactive — responds to intent |
+| `"click"` | Confirmation actions, toggles, destructive ops | Decisive — responds to commitment |
+| `"loop"` | Loading states, status indicators | Continuous — never stops |
+| `"once"` | Success states, completion badges | Definitive — plays once |
+| `false` | Decorative icons, dense icon grids | Static — no motion |
+
+**Rule of thumb**: Use `"hover"` for navigation/browsing icons, `"click"` for action icons.
+
+---
+
+## Sizing
+
+| Context | `size` prop | Tailwind wrapper |
+|---------|-------------|-----------------|
+| Inline with text (16px body) | `size={14}` | `text-sm` |
+| Inline with text (default) | `size={18}` | `text-base` |
+| Button icons | `size={20}` | — |
+| Feature cards | `size={32}` | — |
+| Hero / marketing | `size={48}` | — |
+| Large decorative | `size={64}` | — |
+
+The default is `size={24}`. Motion amplitudes in the animation defs are tuned for 24px — larger icons feel more stable at the same keyframe values because absolute pixel displacement scales down relative to icon surface area.
+
+---
+
+## Source Selection
+
+liveicons exposes five icon sets. All share the same animation system.
+
+| Import | Style | Best for |
+|--------|-------|----------|
+| `liveicons/react` | Lucide (stroke) | Default — general use |
+| `liveicons/react/tabler` | Tabler (stroke) | Denser, more technical feel |
+| `liveicons/react/tabler-filled` | Tabler (fill) | Solid style, CTAs |
+| `liveicons/react/heroicons` | Heroicons (stroke) | Tailwind / minimal projects |
+| `liveicons/react/heroicons-solid` | Heroicons (fill) | Solid style, Tailwind CTAs |
+
+**Consistency rule**: never mix stroke and fill icons in the same section.
+
+---
+
+## Usage Examples
+
+### Notification button
+
+```tsx
+import { BellIcon } from 'liveicons/react'
+
+<button>
+  <BellIcon animate="hover" size={20} />
+  Notifications
+</button>
+```
+
+### Submit / send action
+
+```tsx
+import { SendIcon } from 'liveicons/react'
+
+<button onClick={handleSubmit}>
+  <SendIcon animate="click" size={18} />
+  Send
+</button>
+```
+
+### Loading state
+
+```tsx
+import { LoaderIcon } from 'liveicons/react'
+
+{isLoading && <LoaderIcon animate="loop" size={20} />}
+```
+
+### Success feedback
+
+```tsx
+import { CheckIcon } from 'liveicons/react'
+
+{success && <CheckIcon animate="once" size={20} />}
+```
+
+### Dark/light toggle
+
+```tsx
+import { SunIcon, MoonIcon } from 'liveicons/react'
+
+<button onClick={toggleTheme}>
+  {isDark ? <SunIcon animate="click" size={20} /> : <MoonIcon animate="click" size={20} />}
+</button>
+```
+
+### Imperative control (ref)
+
+```tsx
+import { useRef } from 'react'
+import { BellIcon } from 'liveicons/react'
+import type { LiveIconHandle } from 'liveicons/react'
+
+const bellRef = useRef<LiveIconHandle>(null)
+
+// Trigger programmatically (e.g. on new notification):
+bellRef.current?.startAnimation()
+
+<BellIcon ref={bellRef} size={20} />
+```
+
+---
+
+## Speed
+
+```tsx
+<BellIcon animate="hover" speed="fast" />   // 0.25s
+<BellIcon animate="hover" speed="normal" />  // 0.6s (default)
+<BellIcon animate="hover" speed="slow" />    // 1.2s
+<BellIcon animate="hover" speed={0.4} />     // exact seconds
+```
+
+Use `speed="fast"` for click/tap feedback icons. Use `speed="slow"` for attention-drawing notifications.
+
+---
+
+## Common Mistakes
+
+| Mistake | Fix |
+|---------|-----|
+| Using `"loop"` on action icons (heart, check) | Use `"click"` — looping heartbeats are anxious, not delightful |
+| Using `"hover"` on destructive actions (trash) | `"hover"` warns; but pair with a confirm pattern, not direct delete |
+| Mixing Lucide + Heroicons in one section | Pick one style per component/section |
+| Setting `animate={false}` on every icon in a dense list | That's correct — don't animate icon-heavy tables or nav menus |
+| Using `"once"` for a loading spinner | Use `"loop"` — once plays the animation one time and stops |

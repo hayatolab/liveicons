@@ -231,3 +231,7 @@ pnpm build           # final compile check
 - `references/spring-presets.ts` — copy-paste spring configs for different feels
 - `references/svgo-config.md` — SVGO rules that preserve animation targets
 - `references/component-anatomy.md` — annotated generated component
+
+## Related Skills
+
+- `icon-design` — use first if you need to pick *which* icon to animate (concept → component + animate mode)
