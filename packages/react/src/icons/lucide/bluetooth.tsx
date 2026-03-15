@@ -12,11 +12,20 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/bluetooth.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    scale: 1,
+    opacity: 1
+  },
   animate: {
     scale: [
       1,
       1.1,
+      0.95,
+      1
+    ],
+    opacity: [
+      1,
+      0.8,
       1
     ]
   }
@@ -27,7 +36,7 @@ const BluetoothIcon = forwardRef<LiveIconHandle, LiveIconProps>(
     {
       animate = "on-hover",
       speed = "normal",
-      size = 24,
+      size,
       color = "currentColor",
       strokeWidth = 2,
       className,
@@ -97,8 +106,8 @@ const BluetoothIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         <motion.svg
           animate={controls}
           xmlns="http://www.w3.org/2000/svg"
-          width={size}
-          height={size}
+          width={size ?? "100%"}
+          height={size ?? "100%"}
           viewBox="0 0 24 24"
           fill="none"
           stroke={color}
@@ -107,10 +116,8 @@ const BluetoothIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  type: "spring",
-  stiffness: 300,
-  damping: 20,
-  mass: 0.8
+  duration: 0.5,
+  ease: "easeInOut"
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

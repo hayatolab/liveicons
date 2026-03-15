@@ -12,11 +12,13 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/diameter.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    scale: 1
+  },
   animate: {
     scale: [
       1,
-      1.1,
+      1.15,
       1
     ]
   }
@@ -27,7 +29,7 @@ const DiameterIcon = forwardRef<LiveIconHandle, LiveIconProps>(
     {
       animate = "on-hover",
       speed = "normal",
-      size = 24,
+      size,
       color = "currentColor",
       strokeWidth = 2,
       className,
@@ -97,8 +99,8 @@ const DiameterIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         <motion.svg
           animate={controls}
           xmlns="http://www.w3.org/2000/svg"
-          width={size}
-          height={size}
+          width={size ?? "100%"}
+          height={size ?? "100%"}
           viewBox="0 0 24 24"
           fill="none"
           stroke={color}
@@ -109,7 +111,7 @@ const DiameterIcon = forwardRef<LiveIconHandle, LiveIconProps>(
             ...{
   type: "spring",
   stiffness: 300,
-  damping: 20,
+  damping: 15,
   mass: 0.8
 },
             duration,

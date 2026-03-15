@@ -1,4 +1,4 @@
-// Default source: heroicons-solid
+// Default source: lucide
 // For other styles use: liveicons/react/<source>
-// Available: heroicons-solid
-export * from "./heroicons-solid";
+// Available: heroicons, heroicons-solid, lucide, tabler, tabler-filled
+export * from "./lucide";

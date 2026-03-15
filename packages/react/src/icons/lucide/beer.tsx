@@ -12,12 +12,14 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/beer.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    y: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.1,
-      1
+    y: [
+      0,
+      -5,
+      0
     ]
   }
 };
@@ -27,7 +29,7 @@ const BeerIcon = forwardRef<LiveIconHandle, LiveIconProps>(
     {
       animate = "on-hover",
       speed = "normal",
-      size = 24,
+      size,
       color = "currentColor",
       strokeWidth = 2,
       className,
@@ -97,8 +99,8 @@ const BeerIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         <motion.svg
           animate={controls}
           xmlns="http://www.w3.org/2000/svg"
-          width={size}
-          height={size}
+          width={size ?? "100%"}
+          height={size ?? "100%"}
           viewBox="0 0 24 24"
           fill="none"
           stroke={color}
@@ -108,8 +110,8 @@ const BeerIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           transition={{
             ...{
   type: "spring",
-  stiffness: 300,
-  damping: 20,
+  stiffness: 200,
+  damping: 12,
   mass: 0.8
 },
             duration,

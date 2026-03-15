@@ -12,12 +12,14 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/truck.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    x: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.1,
-      1
+    x: [
+      0,
+      5,
+      0
     ]
   }
 };
@@ -27,7 +29,7 @@ const TruckIcon = forwardRef<LiveIconHandle, LiveIconProps>(
     {
       animate = "on-hover",
       speed = "normal",
-      size = 24,
+      size,
       color = "currentColor",
       strokeWidth = 2, // unused for fill-based icons
       className,
@@ -97,16 +99,15 @@ const TruckIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         <motion.svg
           animate={controls}
           xmlns="http://www.w3.org/2000/svg"
-          width={size}
-          height={size}
+          width={size ?? "100%"}
+          height={size ?? "100%"}
           viewBox="0 0 24 24"
           fill={color}
           transition={{
             ...{
   type: "spring",
-  stiffness: 300,
-  damping: 20,
-  mass: 0.8
+  stiffness: 200,
+  damping: 15
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

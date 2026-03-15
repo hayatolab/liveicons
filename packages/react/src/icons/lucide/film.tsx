@@ -27,7 +27,7 @@ const FilmIcon = forwardRef<LiveIconHandle, LiveIconProps>(
     {
       animate = "on-hover",
       speed = "normal",
-      size = 24,
+      size,
       color = "currentColor",
       strokeWidth = 2,
       className,
@@ -97,8 +97,8 @@ const FilmIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         <motion.svg
           animate={controls}
           xmlns="http://www.w3.org/2000/svg"
-          width={size}
-          height={size}
+          width={size ?? "100%"}
+          height={size ?? "100%"}
           viewBox="0 0 24 24"
           fill="none"
           stroke={color}
@@ -109,8 +109,7 @@ const FilmIcon = forwardRef<LiveIconHandle, LiveIconProps>(
             ...{
   type: "spring",
   stiffness: 300,
-  damping: 20,
-  mass: 0.8
+  damping: 15
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

@@ -12,13 +12,11 @@ import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/git-compare.ts
 const SVG_VARIANTS: Variants = {
-  normal: {},
+  normal: {
+    rotate: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.1,
-      1
-    ]
+    rotate: 90
   }
 };
 
@@ -27,7 +25,7 @@ const GitCompareIcon = forwardRef<LiveIconHandle, LiveIconProps>(
     {
       animate = "on-hover",
       speed = "normal",
-      size = 24,
+      size,
       color = "currentColor",
       strokeWidth = 2,
       className,
@@ -97,8 +95,8 @@ const GitCompareIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         <motion.svg
           animate={controls}
           xmlns="http://www.w3.org/2000/svg"
-          width={size}
-          height={size}
+          width={size ?? "100%"}
+          height={size ?? "100%"}
           viewBox="0 0 24 24"
           fill="none"
           stroke={color}
@@ -108,9 +106,8 @@ const GitCompareIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           transition={{
             ...{
   type: "spring",
-  stiffness: 300,
-  damping: 20,
-  mass: 0.8
+  stiffness: 200,
+  damping: 20
 },
             duration,
             ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),

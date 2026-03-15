@@ -55,8 +55,8 @@ function buildSvgTarget(
   return `<motion.svg
           animate={controls}
           xmlns="http://www.w3.org/2000/svg"
-          width={size}
-          height={size}
+          width={size ?? "100%"}
+          height={size ?? "100%"}
           viewBox="${svgAttrs.viewBox}"
           ${colorProps}
           transition={{
@@ -95,8 +95,8 @@ function buildPathTarget(
 
   return `<svg
           xmlns="http://www.w3.org/2000/svg"
-          width={size}
-          height={size}
+          width={size ?? "100%"}
+          height={size ?? "100%"}
           viewBox="${svgAttrs.viewBox}"
           ${colorProps}
         >
@@ -139,7 +139,7 @@ const ${componentName} = forwardRef<LiveIconHandle, LiveIconProps>(
     {
       animate = "on-hover",
       speed = "normal",
-      size = 24,
+      size,
       color = "currentColor",
       strokeWidth = 2,${strokeWidthNote}
       className,
