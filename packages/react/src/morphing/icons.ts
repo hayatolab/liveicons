@@ -70,9 +70,9 @@ export const ICONS: Record<MorphingIconName, IconDefinition> = {
 
   more: {
     lines: [
-      { x1: 3, y1: CENTER, x2: 3, y2: CENTER },
-      { x1: CENTER, y1: CENTER, x2: CENTER, y2: CENTER },
-      { x1: 11, y1: CENTER, x2: 11, y2: CENTER },
+      { x1: 2.5, y1: CENTER, x2: 3.5, y2: CENTER },
+      { x1: 6.5, y1: CENTER, x2: 7.5, y2: CENTER },
+      { x1: 10.5, y1: CENTER, x2: 11.5, y2: CENTER },
     ],
   },
 

@@ -4,12 +4,13 @@ import { motion, useSpring, useReducedMotion } from "motion/react";
 import type { SpringOptions, Transition } from "motion/react";
 import type { HTMLAttributes } from "react";
 import { useEffect, useRef } from "react";
+import { resolveSpeed } from "@liveicons/core";
+import type { AnimateSpeed } from "@liveicons/core";
 import { ICONS } from "./icons";
 import type { MorphingIconName } from "./icons";
 
-const MORPH_TRANSITION: Transition = {
-  ease: [0.19, 1, 0.22, 1],
-  duration: 0.4,
+const BASE_MORPH_TRANSITION = {
+  ease: [0.19, 1, 0.22, 1] as [number, number, number, number],
 };
 const INSTANT_TRANSITION: Transition = { duration: 0 };
 
@@ -28,6 +29,8 @@ export interface MorphingIconProps
    * Default: 1.5 — visually equivalent to strokeWidth=2 on a 24×24 icon.
    */
   strokeWidth?: number;
+  /** Morph transition speed. "slow" = 1.2s | "normal" = 0.6s | "fast" = 0.25s | number in seconds. Default: "normal" */
+  speed?: AnimateSpeed;
 }
 
 export function MorphingIcon({
@@ -35,11 +38,13 @@ export function MorphingIcon({
   size = 24,
   color = "currentColor",
   strokeWidth = 1.5,
+  speed = "normal",
   className,
   ...props
 }: MorphingIconProps) {
   const reducedMotion = useReducedMotion() ?? false;
-  const activeTransition = reducedMotion ? INSTANT_TRANSITION : MORPH_TRANSITION;
+  const morphTransition: Transition = { ...BASE_MORPH_TRANSITION, duration: resolveSpeed(speed) };
+  const activeTransition = reducedMotion ? INSTANT_TRANSITION : morphTransition;
 
   const definition = ICONS[icon];
   const prevGroupRef = useRef<string | undefined>(definition.group);
