@@ -1,0 +1,20 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+*.tsbuildinfo
+
+# Cache
+.turbo
+coverage
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+
+# Misc
+.liveicons-docs

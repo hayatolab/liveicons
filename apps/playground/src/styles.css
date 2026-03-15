@@ -1,0 +1,265 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #0a0a0a;
+  color: #ededed;
+  min-height: 100vh;
+}
+
+#root {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  color: #888;
+  font-size: 0.95rem;
+  margin-bottom: 40px;
+}
+
+/* Controls bar */
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  padding: 16px 20px;
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 12px;
+}
+
+.controls label {
+  font-size: 0.8rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.controls select,
+.controls input[type="range"] {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #ededed;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.controls select:focus { outline: 1px solid #555; }
+
+.size-value {
+  font-size: 0.8rem;
+  color: #888;
+  min-width: 32px;
+}
+
+/* Section headings */
+.section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #555;
+  margin-bottom: 12px;
+  margin-top: 36px;
+}
+
+/* Icon grid */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+}
+
+/* Icon card */
+.icon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 12px 14px;
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  user-select: none;
+}
+
+.icon-card:hover {
+  border-color: #333;
+  background: #161616;
+}
+
+.icon-card:active {
+  background: #1a1a1a;
+}
+
+.icon-name {
+  font-size: 0.7rem;
+  color: #555;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* Color swatch row */
+.color-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.color-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.1s;
+}
+
+.color-swatch:hover { transform: scale(1.1); }
+.color-swatch.active { border-color: #fff; }
+
+/* Style tabs */
+.style-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.style-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 8px;
+  color: #666;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+
+.style-tab:hover {
+  border-color: #333;
+  color: #aaa;
+}
+
+.style-tab.active {
+  background: #1a1a1a;
+  border-color: #444;
+  color: #ededed;
+}
+
+.tab-count {
+  font-size: 0.7rem;
+  color: #444;
+  background: #1a1a1a;
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid #2a2a2a;
+}
+
+.style-tab.active .tab-count {
+  color: #666;
+  background: #222;
+  border-color: #333;
+}
+
+/* Search row */
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.search-input {
+  flex: 1;
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 8px;
+  color: #ededed;
+  padding: 9px 14px;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.12s;
+}
+
+.search-input:focus {
+  border-color: #444;
+}
+
+.search-input::placeholder {
+  color: #444;
+}
+
+.result-count {
+  font-size: 0.78rem;
+  color: #444;
+  white-space: nowrap;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.page-btn {
+  padding: 8px 18px;
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 8px;
+  color: #888;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+
+.page-btn:hover:not(:disabled) {
+  border-color: #333;
+  color: #ededed;
+}
+
+.page-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.page-info {
+  font-size: 0.82rem;
+  color: #555;
+}
+
+/* Code preview */
+.code-block {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 10px;
+  padding: 16px 20px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  font-size: 0.8rem;
+  color: #a8d8a8;
+  margin-top: 32px;
+  white-space: pre;
+  overflow-x: auto;
+}

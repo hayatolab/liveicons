@@ -1,0 +1,4 @@
+{
+  "extends": "@liveicons/tsconfig/base.json",
+  "include": ["src"]
+}

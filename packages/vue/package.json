@@ -1,0 +1,19 @@
+{
+  "name": "@liveicons/vue",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": {
+    "name": "Vinicius Rocha",
+    "email": "work@hayato.me",
+    "url": "https://github.com/hayatolab"
+  },
+  "private": false,
+  "description": "liveicons — Vue 3 support (Fase 2)",
+  "scripts": {
+    "build": "echo 'Vue package — Fase 2'",
+    "clean": "rm -rf dist .turbo"
+  },
+  "devDependencies": {
+    "@liveicons/tsconfig": "workspace:*"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "extends": "@liveicons/tsconfig/react.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "baseUrl": "."
+  }
+}

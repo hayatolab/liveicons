@@ -1,0 +1,1 @@
+pnpm validate && pnpm check-imports && pnpm check-duplicates

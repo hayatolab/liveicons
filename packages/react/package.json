@@ -1,0 +1,66 @@
+{
+  "name": "liveicons",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Animated icon micro-interactions in 1 line of code",
+  "keywords": [
+    "icons",
+    "animated",
+    "react",
+    "svg",
+    "lucide",
+    "motion",
+    "micro-interactions"
+  ],
+  "author": {
+    "name": "Vinicius Rocha",
+    "email": "work@hayato.me",
+    "url": "https://github.com/hayatolab"
+  },
+  "homepage": "https://liveicons.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hayatolab/liveicons"
+  },
+  "sideEffects": false,
+  "exports": {
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.mjs",
+      "require": "./dist/react/index.js"
+    },
+    ".": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.mjs",
+      "require": "./dist/react/index.js"
+    },
+    "./react/*": {
+      "types": "./dist/react/*/index.d.ts",
+      "import": "./dist/react/*/index.mjs"
+    }
+  },
+  "scripts": {
+    "build": "NODE_OPTIONS='--max-old-space-size=8192' tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rm -rf dist .turbo"
+  },
+  "dependencies": {
+    "@liveicons/core": "workspace:*",
+    "motion": "^11.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@liveicons/tsconfig": "workspace:*",
+    "@testing-library/react": "^14.0.0",
+    "@types/react": "^18.0.0",
+    "react": "^18.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.0.0"
+  }
+}

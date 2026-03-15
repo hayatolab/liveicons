@@ -1,0 +1,37 @@
+name: New Icon Request
+description: Request a new animated icon.
+labels: ["new icon"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Icon name (kebab-case)
+      placeholder: e.g. shopping-cart
+    validations:
+      required: true
+
+  - type: input
+    id: source
+    attributes:
+      label: Source library
+      placeholder: e.g. Lucide, Tabler, Heroicons
+    validations:
+      required: true
+
+  - type: textarea
+    id: animation
+    attributes:
+      label: Suggested animation
+      placeholder: |
+        On hover: the cart shakes left/right
+        Loop: continuous bounce
+    validations:
+      required: false
+
+  - type: textarea
+    id: usecase
+    attributes:
+      label: Use case
+      placeholder: Where will this icon be used?
+    validations:
+      required: false

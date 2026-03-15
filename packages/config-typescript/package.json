@@ -1,0 +1,11 @@
+{
+  "name": "@liveicons/tsconfig",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "Vinicius Rocha",
+    "email": "work@hayato.me",
+    "url": "https://github.com/hayatolab"
+  }
+}
