@@ -95,8 +95,24 @@ function extractSvgChildren(svgContent: string): string {
     .replace(/class=/g, "className=");
 }
 
-/** Load animation definition for an icon, or return null */
-async function loadAnimationDef(iconName: string): Promise<AnimationDef | null> {
+/** Load animation definition for an icon, or return null.
+ *  Checks scripts/animations/<source>/<name>.ts first (source-specific override),
+ *  then falls back to scripts/animations/<name>.ts (shared across all sources).
+ */
+async function loadAnimationDef(iconName: string, source?: string): Promise<AnimationDef | null> {
+  // Source-specific override takes priority
+  if (source) {
+    const sourcePath = path.join(ANIMATIONS_DIR, source, `${iconName}.ts`);
+    if (fs.existsSync(sourcePath)) {
+      try {
+        const mod = await import(sourcePath);
+        return mod.animation as AnimationDef;
+      } catch (err) {
+        console.warn(`  ⚠ Failed to load source-specific animation def for "${source}/${iconName}":`, err);
+      }
+    }
+  }
+
   const defPath = path.join(ANIMATIONS_DIR, `${iconName}.ts`);
   if (!fs.existsSync(defPath)) return null;
 
@@ -114,9 +130,9 @@ const DEFAULT_ANIMATION: AnimationDef = {
   target: "svg",
   variants: {
     normal: {},
-    animate: { scale: [1, 1.05, 1] },
+    animate: { scale: [1, 1.1, 1] },
   },
-  transition: { duration: 0.4 },
+  transition: { type: "spring", stiffness: 300, damping: 20, mass: 0.8 },
 };
 
 async function generateIcon(
@@ -130,7 +146,7 @@ async function generateIcon(
   const svgAttrs = extractSvgAttrs(svgContent);
   const componentName = `${toPascalCase(iconName)}Icon`;
 
-  const animDef = await loadAnimationDef(iconName);
+  const animDef = await loadAnimationDef(iconName, source);
 
   if (!animDef && !includeAll) {
     console.log(`  ⏭ ${componentName} — no animation def, skipping (use --all to generate placeholder)`);
