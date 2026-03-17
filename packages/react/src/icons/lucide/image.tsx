@@ -11,14 +11,14 @@ import type { LiveIconProps, LiveIconHandle } from "../../types";
 import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/image.ts
-const SVG_VARIANTS: Variants = {
-  normal: {},
+const GROUP_VARIANTS: Variants = {
+  normal: {
+    pathLength: 0,
+    opacity: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.1,
-      1
-    ]
+    pathLength: 1,
+    opacity: 1
   }
 };
 
@@ -40,10 +40,14 @@ const ImageIcon = forwardRef<LiveIconHandle, LiveIconProps>(
   ) => {
     const controls = useAnimation();
     const isControlledRef = useRef(false);
+    const hasPlayedOnceRef = useRef(false);
     const duration = resolveSpeed(speed); // applied to transition below
 
     useEffect(() => {
-      if (animate === "loop" || animate === "once") {
+      if (animate === "loop") {
+        controls.start("animate");
+      } else if (animate === "once" && !hasPlayedOnceRef.current) {
+        hasPlayedOnceRef.current = true;
         controls.start("animate");
       }
     }, [animate, controls]);
@@ -94,8 +98,7 @@ const ImageIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         onClick={handleClick}
         {...props}
       >
-        <motion.svg
-          animate={controls}
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           width={size ?? "100%"}
           height={size ?? "100%"}
@@ -105,22 +108,46 @@ const ImageIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeLinejoin="round"
-          transition={{
-            ...{
-  type: "spring",
-  stiffness: 300,
-  damping: 20,
-  mass: 0.8
-},
-            duration,
-            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
-          }}
-          variants={SVG_VARIANTS}
         >
-          <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-  <circle cx="9" cy="9" r="2" />
-  <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-        </motion.svg>
+          <motion.g
+            animate={controls}
+            initial="normal"
+            transition={{
+              ...{
+  staggerChildren: 0.1,
+  duration: 0.35,
+  ease: "easeOut"
+},
+              duration,
+              ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}),
+            }}
+          >
+            <motion.rect width="18" height="18" x="3" y="3" rx="2" ry="2" 
+              variants={GROUP_VARIANTS}
+              transition={{ ...{
+  staggerChildren: 0.1,
+  duration: 0.35,
+  ease: "easeOut"
+}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}
+            />
+  <motion.circle cx="9" cy="9" r="2" 
+              variants={GROUP_VARIANTS}
+              transition={{ ...{
+  staggerChildren: 0.1,
+  duration: 0.35,
+  ease: "easeOut"
+}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}
+            />
+  <motion.path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" 
+              variants={GROUP_VARIANTS}
+              transition={{ ...{
+  staggerChildren: 0.1,
+  duration: 0.35,
+  ease: "easeOut"
+}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}
+            />
+          </motion.g>
+        </svg>
       </div>
     );
   }

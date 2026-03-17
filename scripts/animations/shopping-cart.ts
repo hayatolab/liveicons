@@ -4,9 +4,9 @@ export const animation: AnimationDef = {
   target: "svg",
   variants: {
     normal: { x: 0 },
-    animate: { x: [0, 3, 0] },
+    animate: { x: 3 },
   },
-  transition: { type: "spring", stiffness: 300, damping: 15 },
+  transition: { type: "spring", stiffness: 300, damping: 12 },
   category: "action",
-  tags: ["shopping", "cart", "buy", "purchase", "checkout"],
+  tags: ["cart", "shop", "commerce"],
 };

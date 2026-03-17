@@ -1,12 +1,13 @@
 import type { AnimationDef } from "../types";
 
 export const animation: AnimationDef = {
-  target: "svg",
+  target: "path",
+  pathIndex: [0],
   variants: {
-    normal: { rotate: 0 },
-    animate: { rotate: [0, -20, 0] },
+    normal: { pathLength: 0, opacity: 0 },
+    animate: { pathLength: 1, opacity: 1 },
   },
-  transition: { type: "spring", stiffness: 200, damping: 15 },
-  category: "action",
-  tags: ["dark", "night", "theme", "sleep"],
+  transition: { duration: 0.4, ease: "easeInOut" },
+  category: "feedback",
+  tags: ["moon", "dark", "night", "theme"],
 };

@@ -1,11 +1,12 @@
 import type { AnimationDef } from "../types";
+
 export const animation: AnimationDef = {
   target: "svg",
   variants: {
     normal: { rotate: 0 },
-    animate: { rotate: [0, -10, 10, -10, 10, 0] },
+    animate: { rotate: [0, -5, 5, -3, 3, 0] },
   },
-  transition: { duration: 0.5, ease: "easeInOut" },
+  transition: { duration: 0.35, ease: "easeInOut" },
   category: "feedback",
-  tags: ["gift", "present", "shake", "celebrate"],
+  tags: ["gift", "present", "reward"],
 };

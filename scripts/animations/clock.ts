@@ -1,10 +1,13 @@
 import type { AnimationDef } from "../types";
+
 export const animation: AnimationDef = {
-  target: "svg",
+  target: "path",
+  pathIndex: [1],
   variants: {
     normal: { rotate: 0 },
-    animate: { rotate: [0, 45, 0] },
+    animate: { rotate: 45 },
   },
-  transition: { type: "spring", stiffness: 260, damping: 20 },
-  category: "action",
+  transition: { type: "spring", stiffness: 300, damping: 18 },
+  category: "feedback",
+  tags: ["time", "clock", "schedule"],
 };

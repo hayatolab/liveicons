@@ -4,9 +4,9 @@ export const animation: AnimationDef = {
   target: "svg",
   variants: {
     normal: { rotate: 0 },
-    animate: { rotate: [0, -15, 15, -10, 10, -5, 5, 0] },
+    animate: { rotate: [0, -3, 3, -2, 2, 0] },
   },
-  transition: { duration: 0.5, ease: "easeInOut" },
-  category: "action",
-  tags: ["phone", "call", "ring", "communication"],
+  transition: { duration: 0.3, ease: "easeInOut" },
+  category: "feedback",
+  tags: ["phone", "call", "ring"],
 };

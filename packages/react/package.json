@@ -46,7 +46,7 @@
   },
   "scripts": {
     "build": "NODE_OPTIONS='--max-old-space-size=8192' tsup",
-    "dev": "tsup --watch",
+    "dev": "NODE_OPTIONS='--max-old-space-size=8192' tsup --watch",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest",

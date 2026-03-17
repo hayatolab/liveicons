@@ -1,12 +1,16 @@
 import type { AnimationDef } from "../types";
 
 export const animation: AnimationDef = {
-  target: "svg",
+  target: "group",
   variants: {
-    normal: { y: 0 },
-    animate: { y: [0, -4, 0] },
+    normal: { pathLength: 0, opacity: 0 },
+    animate: { pathLength: 1, opacity: 1 },
   },
-  transition: { type: "spring", stiffness: 400, damping: 15 },
+  transition: {
+    staggerChildren: 0.12,
+    duration: 0.35,
+    ease: "easeOut",
+  },
   category: "navigation",
-  tags: ["house", "homepage", "main", "start"],
+  tags: ["home", "house", "main"],
 };

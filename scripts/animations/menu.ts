@@ -1,12 +1,16 @@
 import type { AnimationDef } from "../types";
 
 export const animation: AnimationDef = {
-  target: "svg",
+  target: "group",
   variants: {
     normal: { scaleX: 1 },
-    animate: { scaleX: [1, 0.85, 1] },
+    animate: { scaleX: [1, 0.7, 1] },
   },
-  transition: { duration: 0.3, ease: "easeInOut" },
+  transition: {
+    staggerChildren: 0.06,
+    duration: 0.25,
+    ease: "easeInOut",
+  },
   category: "navigation",
-  tags: ["hamburger", "sidebar", "navigation", "drawer"],
+  tags: ["menu", "hamburger", "nav"],
 };

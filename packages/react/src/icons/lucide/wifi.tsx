@@ -11,23 +11,14 @@ import type { LiveIconProps, LiveIconHandle } from "../../types";
 import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/wifi.ts
-const SVG_VARIANTS: Variants = {
+const GROUP_VARIANTS: Variants = {
   normal: {
-    scale: 1,
-    opacity: 1
+    pathLength: 0,
+    opacity: 0
   },
   animate: {
-    scale: [
-      1,
-      1.1,
-      0.95,
-      1
-    ],
-    opacity: [
-      1,
-      0.8,
-      1
-    ]
+    pathLength: 1,
+    opacity: 1
   }
 };
 
@@ -49,10 +40,14 @@ const WifiIcon = forwardRef<LiveIconHandle, LiveIconProps>(
   ) => {
     const controls = useAnimation();
     const isControlledRef = useRef(false);
+    const hasPlayedOnceRef = useRef(false);
     const duration = resolveSpeed(speed); // applied to transition below
 
     useEffect(() => {
-      if (animate === "loop" || animate === "once") {
+      if (animate === "loop") {
+        controls.start("animate");
+      } else if (animate === "once" && !hasPlayedOnceRef.current) {
+        hasPlayedOnceRef.current = true;
         controls.start("animate");
       }
     }, [animate, controls]);
@@ -103,8 +98,7 @@ const WifiIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         onClick={handleClick}
         {...props}
       >
-        <motion.svg
-          animate={controls}
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           width={size ?? "100%"}
           height={size ?? "100%"}
@@ -114,21 +108,54 @@ const WifiIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeLinejoin="round"
-          transition={{
-            ...{
-  duration: 0.5,
-  ease: "easeInOut"
-},
-            duration,
-            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
-          }}
-          variants={SVG_VARIANTS}
         >
-          <path d="M12 20h.01" />
-  <path d="M2 8.82a15 15 0 0 1 20 0" />
-  <path d="M5 12.859a10 10 0 0 1 14 0" />
-  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
-        </motion.svg>
+          <motion.g
+            animate={controls}
+            initial="normal"
+            transition={{
+              ...{
+  staggerChildren: 0.1,
+  duration: 0.3,
+  ease: "easeOut"
+},
+              duration,
+              ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}),
+            }}
+          >
+            <motion.path d="M12 20h.01" 
+              variants={GROUP_VARIANTS}
+              transition={{ ...{
+  staggerChildren: 0.1,
+  duration: 0.3,
+  ease: "easeOut"
+}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}
+            />
+  <motion.path d="M2 8.82a15 15 0 0 1 20 0" 
+              variants={GROUP_VARIANTS}
+              transition={{ ...{
+  staggerChildren: 0.1,
+  duration: 0.3,
+  ease: "easeOut"
+}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}
+            />
+  <motion.path d="M5 12.859a10 10 0 0 1 14 0" 
+              variants={GROUP_VARIANTS}
+              transition={{ ...{
+  staggerChildren: 0.1,
+  duration: 0.3,
+  ease: "easeOut"
+}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}
+            />
+  <motion.path d="M8.5 16.429a5 5 0 0 1 7 0" 
+              variants={GROUP_VARIANTS}
+              transition={{ ...{
+  staggerChildren: 0.1,
+  duration: 0.3,
+  ease: "easeOut"
+}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}
+            />
+          </motion.g>
+        </svg>
       </div>
     );
   }

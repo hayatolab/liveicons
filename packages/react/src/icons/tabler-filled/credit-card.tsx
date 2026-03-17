@@ -13,13 +13,13 @@ import { resolveSpeed } from "@liveicons/core";
 // Animation variants — defined in scripts/animations/credit-card.ts
 const SVG_VARIANTS: Variants = {
   normal: {
-    x: 0
+    scaleX: 1
   },
   animate: {
-    x: [
+    scaleX: [
+      1,
       0,
-      4,
-      0
+      1
     ]
   }
 };
@@ -42,10 +42,14 @@ const CreditCardIcon = forwardRef<LiveIconHandle, LiveIconProps>(
   ) => {
     const controls = useAnimation();
     const isControlledRef = useRef(false);
+    const hasPlayedOnceRef = useRef(false);
     const duration = resolveSpeed(speed); // applied to transition below
 
     useEffect(() => {
-      if (animate === "loop" || animate === "once") {
+      if (animate === "loop") {
+        controls.start("animate");
+      } else if (animate === "once" && !hasPlayedOnceRef.current) {
+        hasPlayedOnceRef.current = true;
         controls.start("animate");
       }
     }, [animate, controls]);
@@ -105,13 +109,11 @@ const CreditCardIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           fill={color}
           transition={{
             ...{
-  type: "spring",
-  stiffness: 400,
-  damping: 15,
-  mass: 0.5
+  duration: 0.35,
+  ease: "easeInOut"
 },
             duration,
-            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
+            ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}),
           }}
           variants={SVG_VARIANTS}
         >

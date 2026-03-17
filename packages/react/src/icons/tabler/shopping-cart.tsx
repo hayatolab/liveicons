@@ -16,11 +16,7 @@ const SVG_VARIANTS: Variants = {
     x: 0
   },
   animate: {
-    x: [
-      0,
-      3,
-      0
-    ]
+    x: 3
   }
 };
 
@@ -42,10 +38,14 @@ const ShoppingCartIcon = forwardRef<LiveIconHandle, LiveIconProps>(
   ) => {
     const controls = useAnimation();
     const isControlledRef = useRef(false);
+    const hasPlayedOnceRef = useRef(false);
     const duration = resolveSpeed(speed); // applied to transition below
 
     useEffect(() => {
-      if (animate === "loop" || animate === "once") {
+      if (animate === "loop") {
+        controls.start("animate");
+      } else if (animate === "once" && !hasPlayedOnceRef.current) {
+        hasPlayedOnceRef.current = true;
         controls.start("animate");
       }
     }, [animate, controls]);
@@ -111,10 +111,10 @@ const ShoppingCartIcon = forwardRef<LiveIconHandle, LiveIconProps>(
             ...{
   type: "spring",
   stiffness: 300,
-  damping: 15
+  damping: 12
 },
             duration,
-            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
+            ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}),
           }}
           variants={SVG_VARIANTS}
         >

@@ -235,3 +235,4 @@ pnpm build           # final compile check
 ## Related Skills
 
 - `icon-design` — use first if you need to pick *which* icon to animate (concept → component + animate mode)
+- `svg-animation-techniques` — deep SVG animation knowledge (path drawing, morphing, transforms, stroke tricks) for designing creative AnimationDefs

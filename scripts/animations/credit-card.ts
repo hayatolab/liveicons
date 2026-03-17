@@ -1,10 +1,12 @@
 import type { AnimationDef } from "../types";
+
 export const animation: AnimationDef = {
   target: "svg",
   variants: {
-    normal: { x: 0 },
-    animate: { x: [0, 4, 0] },
+    normal: { scaleX: 1 },
+    animate: { scaleX: [1, 0, 1] },
   },
-  transition: { type: "spring", stiffness: 400, damping: 15, mass: 0.5 },
-  category: "navigation",
+  transition: { duration: 0.35, ease: "easeInOut" },
+  category: "action",
+  tags: ["payment", "card", "credit"],
 };
