@@ -11,14 +11,12 @@ import type { LiveIconProps, LiveIconHandle } from "../../types";
 import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/calendar.ts
-const SVG_VARIANTS: Variants = {
-  normal: {},
+const PATH_VARIANTS: Variants = {
+  normal: {
+    y: 0
+  },
   animate: {
-    scale: [
-      1,
-      1.1,
-      1
-    ]
+    y: -4
   }
 };
 
@@ -40,10 +38,14 @@ const CalendarIcon = forwardRef<LiveIconHandle, LiveIconProps>(
   ) => {
     const controls = useAnimation();
     const isControlledRef = useRef(false);
+    const hasPlayedOnceRef = useRef(false);
     const duration = resolveSpeed(speed); // applied to transition below
 
     useEffect(() => {
-      if (animate === "loop" || animate === "once") {
+      if (animate === "loop") {
+        controls.start("animate");
+      } else if (animate === "once" && !hasPlayedOnceRef.current) {
+        hasPlayedOnceRef.current = true;
         controls.start("animate");
       }
     }, [animate, controls]);
@@ -94,8 +96,7 @@ const CalendarIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         onClick={handleClick}
         {...props}
       >
-        <motion.svg
-          animate={controls}
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           width={size ?? "100%"}
           height={size ?? "100%"}
@@ -105,25 +106,32 @@ const CalendarIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeLinejoin="round"
-          transition={{
-            ...{
+        >
+          <motion.path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12" 
+            animate={controls}
+            initial="normal"
+            variants={PATH_VARIANTS}
+            transition={{ ...{
   type: "spring",
   stiffness: 300,
-  damping: 20,
-  mass: 0.8
-},
-            duration,
-            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
-          }}
-          variants={SVG_VARIANTS}
-        >
-          <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12" />
-  <path d="M16 3v4" />
+  damping: 12
+}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}
+          />
+  <motion.path d="M16 3v4" 
+            animate={controls}
+            initial="normal"
+            variants={PATH_VARIANTS}
+            transition={{ ...{
+  type: "spring",
+  stiffness: 300,
+  damping: 12
+}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}
+          />
   <path d="M8 3v4" />
   <path d="M4 11h16" />
   <path d="M11 15h1" />
   <path d="M12 15v3" />
-        </motion.svg>
+        </svg>
       </div>
     );
   }

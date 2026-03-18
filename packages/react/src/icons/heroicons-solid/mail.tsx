@@ -11,16 +11,12 @@ import type { LiveIconProps, LiveIconHandle } from "../../types";
 import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/mail.ts
-const SVG_VARIANTS: Variants = {
+const PATH_VARIANTS: Variants = {
   normal: {
     y: 0
   },
   animate: {
-    y: [
-      0,
-      -3,
-      0
-    ]
+    y: -3
   }
 };
 
@@ -42,10 +38,14 @@ const MailIcon = forwardRef<LiveIconHandle, LiveIconProps>(
   ) => {
     const controls = useAnimation();
     const isControlledRef = useRef(false);
+    const hasPlayedOnceRef = useRef(false);
     const duration = resolveSpeed(speed); // applied to transition below
 
     useEffect(() => {
-      if (animate === "loop" || animate === "once") {
+      if (animate === "loop") {
+        controls.start("animate");
+      } else if (animate === "once" && !hasPlayedOnceRef.current) {
+        hasPlayedOnceRef.current = true;
         controls.start("animate");
       }
     }, [animate, controls]);
@@ -96,27 +96,25 @@ const MailIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         onClick={handleClick}
         {...props}
       >
-        <motion.svg
-          animate={controls}
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           width={size ?? "100%"}
           height={size ?? "100%"}
           viewBox="0 0 24 24"
           fill={color}
-          transition={{
-            ...{
-  type: "spring",
-  stiffness: 400,
-  damping: 15
-},
-            duration,
-            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
-          }}
-          variants={SVG_VARIANTS}
         >
-          <path d="M1.5 8.6691V17.25C1.5 18.9069 2.84315 20.25 4.5 20.25H19.5C21.1569 20.25 22.5 18.9069 22.5 17.25V8.6691L13.5723 14.1631C12.6081 14.7564 11.3919 14.7564 10.4277 14.1631L1.5 8.6691Z"/>
+          <motion.path d="M1.5 8.6691V17.25C1.5 18.9069 2.84315 20.25 4.5 20.25H19.5C21.1569 20.25 22.5 18.9069 22.5 17.25V8.6691L13.5723 14.1631C12.6081 14.7564 11.3919 14.7564 10.4277 14.1631L1.5 8.6691Z"
+            animate={controls}
+            initial="normal"
+            variants={PATH_VARIANTS}
+            transition={{ ...{
+  type: "spring",
+  stiffness: 300,
+  damping: 15
+}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}
+          />
 <path d="M22.5 6.90783V6.75C22.5 5.09315 21.1569 3.75 19.5 3.75H4.5C2.84315 3.75 1.5 5.09315 1.5 6.75V6.90783L11.2139 12.8856C11.696 13.1823 12.304 13.1823 12.7861 12.8856L22.5 6.90783Z"/>
-        </motion.svg>
+        </svg>
       </div>
     );
   }

@@ -11,18 +11,12 @@ import type { LiveIconProps, LiveIconHandle } from "../../types";
 import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/lock.ts
-const SVG_VARIANTS: Variants = {
+const PATH_VARIANTS: Variants = {
   normal: {
     y: 0
   },
   animate: {
-    y: [
-      0,
-      -3,
-      0,
-      -2,
-      0
-    ]
+    y: -6
   }
 };
 
@@ -44,10 +38,14 @@ const LockIcon = forwardRef<LiveIconHandle, LiveIconProps>(
   ) => {
     const controls = useAnimation();
     const isControlledRef = useRef(false);
+    const hasPlayedOnceRef = useRef(false);
     const duration = resolveSpeed(speed); // applied to transition below
 
     useEffect(() => {
-      if (animate === "loop" || animate === "once") {
+      if (animate === "loop") {
+        controls.start("animate");
+      } else if (animate === "once" && !hasPlayedOnceRef.current) {
+        hasPlayedOnceRef.current = true;
         controls.start("animate");
       }
     }, [animate, controls]);
@@ -98,8 +96,7 @@ const LockIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         onClick={handleClick}
         {...props}
       >
-        <motion.svg
-          animate={controls}
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           width={size ?? "100%"}
           height={size ?? "100%"}
@@ -109,18 +106,19 @@ const LockIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeLinejoin="round"
-          transition={{
-            ...{
-  duration: 0.4
-},
-            duration,
-            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
-          }}
-          variants={SVG_VARIANTS}
         >
           <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-        </motion.svg>
+  <motion.path d="M7 11V7a5 5 0 0 1 10 0v4" 
+            animate={controls}
+            initial="normal"
+            variants={PATH_VARIANTS}
+            transition={{ ...{
+  type: "spring",
+  stiffness: 300,
+  damping: 15
+}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}
+          />
+        </svg>
       </div>
     );
   }

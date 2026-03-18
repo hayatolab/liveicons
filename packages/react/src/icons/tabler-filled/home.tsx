@@ -11,16 +11,14 @@ import type { LiveIconProps, LiveIconHandle } from "../../types";
 import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/home.ts
-const SVG_VARIANTS: Variants = {
+const GROUP_VARIANTS: Variants = {
   normal: {
-    y: 0
+    pathLength: 0,
+    opacity: 0
   },
   animate: {
-    y: [
-      0,
-      -4,
-      0
-    ]
+    pathLength: 1,
+    opacity: 1
   }
 };
 
@@ -42,10 +40,14 @@ const HomeIcon = forwardRef<LiveIconHandle, LiveIconProps>(
   ) => {
     const controls = useAnimation();
     const isControlledRef = useRef(false);
+    const hasPlayedOnceRef = useRef(false);
     const duration = resolveSpeed(speed); // applied to transition below
 
     useEffect(() => {
-      if (animate === "loop" || animate === "once") {
+      if (animate === "loop") {
+        controls.start("animate");
+      } else if (animate === "once" && !hasPlayedOnceRef.current) {
+        hasPlayedOnceRef.current = true;
         controls.start("animate");
       }
     }, [animate, controls]);
@@ -96,26 +98,36 @@ const HomeIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         onClick={handleClick}
         {...props}
       >
-        <motion.svg
-          animate={controls}
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           width={size ?? "100%"}
           height={size ?? "100%"}
           viewBox="0 0 24 24"
           fill={color}
-          transition={{
-            ...{
-  type: "spring",
-  stiffness: 400,
-  damping: 15
-},
-            duration,
-            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
-          }}
-          variants={SVG_VARIANTS}
         >
-          <path d="M12.707 2.293l9 9c.63 .63 .184 1.707 -.707 1.707h-1v6a3 3 0 0 1 -3 3h-1v-7a3 3 0 0 0 -2.824 -2.995l-.176 -.005h-2a3 3 0 0 0 -3 3v7h-1a3 3 0 0 1 -3 -3v-6h-1c-.89 0 -1.337 -1.077 -.707 -1.707l9 -9a1 1 0 0 1 1.414 0m.293 11.707a1 1 0 0 1 1 1v7h-4v-7a1 1 0 0 1 .883 -.993l.117 -.007z" />
-        </motion.svg>
+          <motion.g
+            animate={controls}
+            initial="normal"
+            transition={{
+              ...{
+  staggerChildren: 0.12,
+  duration: 0.35,
+  ease: "easeOut"
+},
+              duration,
+              ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}),
+            }}
+          >
+            <motion.path d="M12.707 2.293l9 9c.63 .63 .184 1.707 -.707 1.707h-1v6a3 3 0 0 1 -3 3h-1v-7a3 3 0 0 0 -2.824 -2.995l-.176 -.005h-2a3 3 0 0 0 -3 3v7h-1a3 3 0 0 1 -3 -3v-6h-1c-.89 0 -1.337 -1.077 -.707 -1.707l9 -9a1 1 0 0 1 1.414 0m.293 11.707a1 1 0 0 1 1 1v7h-4v-7a1 1 0 0 1 .883 -.993l.117 -.007z" 
+              variants={GROUP_VARIANTS}
+              transition={{ ...{
+  staggerChildren: 0.12,
+  duration: 0.35,
+  ease: "easeOut"
+}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}
+            />
+          </motion.g>
+        </svg>
       </div>
     );
   }

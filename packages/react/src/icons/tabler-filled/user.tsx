@@ -11,16 +11,12 @@ import type { LiveIconProps, LiveIconHandle } from "../../types";
 import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/user.ts
-const SVG_VARIANTS: Variants = {
+const PATH_VARIANTS: Variants = {
   normal: {
-    scale: 1
+    y: 0
   },
   animate: {
-    scale: [
-      1,
-      1.1,
-      1
-    ]
+    y: -3
   }
 };
 
@@ -42,10 +38,14 @@ const UserIcon = forwardRef<LiveIconHandle, LiveIconProps>(
   ) => {
     const controls = useAnimation();
     const isControlledRef = useRef(false);
+    const hasPlayedOnceRef = useRef(false);
     const duration = resolveSpeed(speed); // applied to transition below
 
     useEffect(() => {
-      if (animate === "loop" || animate === "once") {
+      if (animate === "loop") {
+        controls.start("animate");
+      } else if (animate === "once" && !hasPlayedOnceRef.current) {
+        hasPlayedOnceRef.current = true;
         controls.start("animate");
       }
     }, [animate, controls]);
@@ -96,27 +96,25 @@ const UserIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         onClick={handleClick}
         {...props}
       >
-        <motion.svg
-          animate={controls}
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           width={size ?? "100%"}
           height={size ?? "100%"}
           viewBox="0 0 24 24"
           fill={color}
-          transition={{
-            ...{
-  type: "spring",
-  stiffness: 300,
-  damping: 15
-},
-            duration,
-            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
-          }}
-          variants={SVG_VARIANTS}
         >
           <path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
-  <path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" />
-        </motion.svg>
+  <motion.path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" 
+            animate={controls}
+            initial="normal"
+            variants={PATH_VARIANTS}
+            transition={{ ...{
+  type: "spring",
+  stiffness: 300,
+  damping: 12
+}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}
+          />
+        </svg>
       </div>
     );
   }

@@ -62,7 +62,7 @@ function buildSvgTarget(
           transition={{
             ...${transition},
             duration,
-            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
+            ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}),
           }}
           variants={${variantConst}}
         >
@@ -79,19 +79,31 @@ function buildPathTarget(
   const transition = serializeTransition(animation.transition);
   const colorProps = buildSvgColorProps(svgAttrs);
 
-  // Wrap only targeted paths; others stay as plain <path>
+  // SVG shape elements that can be animated with motion.*
+  const shapeElements = ["path", "circle", "rect", "line", "polyline", "ellipse", "polygon"];
+
+  // Wrap only targeted elements; others stay as plain SVG elements
+  let wrappedCount = 0;
   const wrappedChildren = svgChildren
     .split("\n")
     .map((line, idx) => {
       const isTarget = targetIndices === null || targetIndices.includes(idx);
-      if (isTarget && line.trim().startsWith("<path")) {
+      const trimmed = line.trim();
+      const matchedTag = shapeElements.find((tag) => trimmed.startsWith(`<${tag}`));
+      if (isTarget && matchedTag) {
+        wrappedCount++;
         return line
-          .replace("<path", "<motion.path")
-          .replace("/>", `\n            animate={controls}\n            initial="normal"\n            variants={${variantConst}}\n            transition={{ ...${transition}, duration }}\n          />`);
+          .replace(`<${matchedTag}`, `<motion.${matchedTag}`)
+          .replace("/>", `\n            animate={controls}\n            initial="normal"\n            variants={${variantConst}}\n            transition={{ ...${transition}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}\n          />`);
       }
       return line;
     })
     .join("\n");
+
+  // If no elements matched the pathIndex, fall back to SVG-level animation
+  if (wrappedCount === 0) {
+    return buildSvgTarget(opts, variantConst);
+  }
 
   return `<svg
           xmlns="http://www.w3.org/2000/svg"
@@ -104,6 +116,54 @@ function buildPathTarget(
         </svg>`;
 }
 
+function buildGroupTarget(
+  opts: TemplateOptions,
+  variantConst: string
+): string {
+  const { animation, svgChildren, svgAttrs } = opts;
+  const transition = serializeTransition(animation.transition);
+  const colorProps = buildSvgColorProps(svgAttrs);
+
+  // SVG shape elements that can be animated with motion.*
+  const shapeElements = ["path", "circle", "rect", "line", "polyline", "ellipse", "polygon"];
+
+  // Wrap every child element as motion.* so they receive variant propagation + stagger
+  // Each child gets its own transition for loop mode (repeat doesn't propagate from parent motion.g)
+  const motionChildren = svgChildren
+    .split("\n")
+    .map((line) => {
+      const trimmed = line.trim();
+      const matchedTag = shapeElements.find((tag) => trimmed.startsWith(`<${tag}`));
+      if (matchedTag) {
+        return line
+          .replace(`<${matchedTag}`, `<motion.${matchedTag}`)
+          .replace("/>", `\n              variants={${variantConst}}\n              transition={{ ...${transition}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}\n            />`);
+      }
+      return line;
+    })
+    .join("\n");
+
+  return `<svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={size ?? "100%"}
+          height={size ?? "100%"}
+          viewBox="${svgAttrs.viewBox}"
+          ${colorProps}
+        >
+          <motion.g
+            animate={controls}
+            initial="normal"
+            transition={{
+              ...${transition},
+              duration,
+              ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}),
+            }}
+          >
+            ${motionChildren}
+          </motion.g>
+        </svg>`;
+}
+
 export function reactIconTemplate(opts: TemplateOptions): string {
   const { componentName, iconName, source, animation, svgAttrs, typesPath } = opts;
 
@@ -113,7 +173,9 @@ export function reactIconTemplate(opts: TemplateOptions): string {
   const svgBlock =
     animation.target === "path"
       ? buildPathTarget(opts, variantConst)
-      : buildSvgTarget(opts, variantConst);
+      : animation.target === "group"
+        ? buildGroupTarget(opts, variantConst)
+        : buildSvgTarget(opts, variantConst);
 
   // strokeWidth prop is only useful for stroke-based icons; still included in
   // the component signature for API consistency but unused for fill-based icons.

@@ -11,24 +11,12 @@ import type { LiveIconProps, LiveIconHandle } from "../../types";
 import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/search.ts
-const SVG_VARIANTS: Variants = {
+const PATH_VARIANTS: Variants = {
   normal: {
-    x: 0,
-    y: 0
+    scale: 1
   },
   animate: {
-    x: [
-      0,
-      0,
-      -3,
-      0
-    ],
-    y: [
-      0,
-      -4,
-      0,
-      0
-    ]
+    scale: 1.15
   }
 };
 
@@ -50,10 +38,14 @@ const SearchIcon = forwardRef<LiveIconHandle, LiveIconProps>(
   ) => {
     const controls = useAnimation();
     const isControlledRef = useRef(false);
+    const hasPlayedOnceRef = useRef(false);
     const duration = resolveSpeed(speed); // applied to transition below
 
     useEffect(() => {
-      if (animate === "loop" || animate === "once") {
+      if (animate === "loop") {
+        controls.start("animate");
+      } else if (animate === "once" && !hasPlayedOnceRef.current) {
+        hasPlayedOnceRef.current = true;
         controls.start("animate");
       }
     }, [animate, controls]);
@@ -104,8 +96,7 @@ const SearchIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         onClick={handleClick}
         {...props}
       >
-        <motion.svg
-          animate={controls}
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           width={size ?? "100%"}
           height={size ?? "100%"}
@@ -115,19 +106,19 @@ const SearchIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeLinejoin="round"
-          transition={{
-            ...{
-  duration: 0.6,
-  bounce: 0.3
-},
-            duration,
-            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
-          }}
-          variants={SVG_VARIANTS}
         >
           <path d="m21 21-4.34-4.34" />
-  <circle cx="11" cy="11" r="8" />
-        </motion.svg>
+  <motion.circle cx="11" cy="11" r="8" 
+            animate={controls}
+            initial="normal"
+            variants={PATH_VARIANTS}
+            transition={{ ...{
+  type: "spring",
+  stiffness: 300,
+  damping: 15
+}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}
+          />
+        </svg>
       </div>
     );
   }

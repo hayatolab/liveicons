@@ -1,12 +1,16 @@
 import type { AnimationDef } from "../types";
 
 export const animation: AnimationDef = {
-  target: "svg",
+  target: "group",
   variants: {
-    normal: { scaleX: 1 },
-    animate: { scaleX: [1, 1.1, 0.9, 1.05, 1] },
+    normal: { pathLength: 0, opacity: 0 },
+    animate: { pathLength: 1, opacity: 1 },
   },
-  transition: { duration: 0.4 },
+  transition: {
+    staggerChildren: 0.1,
+    duration: 0.3,
+    ease: "easeOut",
+  },
   category: "media",
-  tags: ["audio", "sound", "speaker", "mute"],
+  tags: ["volume", "sound", "audio"],
 };

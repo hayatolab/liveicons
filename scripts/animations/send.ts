@@ -4,9 +4,9 @@ export const animation: AnimationDef = {
   target: "svg",
   variants: {
     normal: { x: 0, y: 0 },
-    animate: { x: [0, 6, 0], y: [0, -6, 0] },
+    animate: { x: 4, y: -4 },
   },
-  transition: { duration: 0.4, ease: "easeOut" },
+  transition: { type: "spring", stiffness: 300, damping: 15 },
   category: "action",
-  tags: ["submit", "email", "message", "share", "deliver"],
+  tags: ["send", "submit", "launch"],
 };

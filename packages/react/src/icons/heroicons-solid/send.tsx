@@ -17,16 +17,8 @@ const SVG_VARIANTS: Variants = {
     y: 0
   },
   animate: {
-    x: [
-      0,
-      6,
-      0
-    ],
-    y: [
-      0,
-      -6,
-      0
-    ]
+    x: 4,
+    y: -4
   }
 };
 
@@ -48,10 +40,14 @@ const SendIcon = forwardRef<LiveIconHandle, LiveIconProps>(
   ) => {
     const controls = useAnimation();
     const isControlledRef = useRef(false);
+    const hasPlayedOnceRef = useRef(false);
     const duration = resolveSpeed(speed); // applied to transition below
 
     useEffect(() => {
-      if (animate === "loop" || animate === "once") {
+      if (animate === "loop") {
+        controls.start("animate");
+      } else if (animate === "once" && !hasPlayedOnceRef.current) {
+        hasPlayedOnceRef.current = true;
         controls.start("animate");
       }
     }, [animate, controls]);
@@ -111,11 +107,12 @@ const SendIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           fill={color}
           transition={{
             ...{
-  duration: 0.4,
-  ease: "easeOut"
+  type: "spring",
+  stiffness: 300,
+  damping: 15
 },
             duration,
-            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
+            ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}),
           }}
           variants={SVG_VARIANTS}
         >

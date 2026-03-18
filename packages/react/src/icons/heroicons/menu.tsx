@@ -11,14 +11,14 @@ import type { LiveIconProps, LiveIconHandle } from "../../types";
 import { resolveSpeed } from "@liveicons/core";
 
 // Animation variants — defined in scripts/animations/menu.ts
-const SVG_VARIANTS: Variants = {
+const GROUP_VARIANTS: Variants = {
   normal: {
     scaleX: 1
   },
   animate: {
     scaleX: [
       1,
-      0.85,
+      0.7,
       1
     ]
   }
@@ -42,10 +42,14 @@ const MenuIcon = forwardRef<LiveIconHandle, LiveIconProps>(
   ) => {
     const controls = useAnimation();
     const isControlledRef = useRef(false);
+    const hasPlayedOnceRef = useRef(false);
     const duration = resolveSpeed(speed); // applied to transition below
 
     useEffect(() => {
-      if (animate === "loop" || animate === "once") {
+      if (animate === "loop") {
+        controls.start("animate");
+      } else if (animate === "once" && !hasPlayedOnceRef.current) {
+        hasPlayedOnceRef.current = true;
         controls.start("animate");
       }
     }, [animate, controls]);
@@ -96,8 +100,7 @@ const MenuIcon = forwardRef<LiveIconHandle, LiveIconProps>(
         onClick={handleClick}
         {...props}
       >
-        <motion.svg
-          animate={controls}
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           width={size ?? "100%"}
           height={size ?? "100%"}
@@ -107,18 +110,30 @@ const MenuIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeLinejoin="round"
-          transition={{
-            ...{
-  duration: 0.3,
+        >
+          <motion.g
+            animate={controls}
+            initial="normal"
+            transition={{
+              ...{
+  staggerChildren: 0.06,
+  duration: 0.25,
   ease: "easeInOut"
 },
-            duration,
-            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
-          }}
-          variants={SVG_VARIANTS}
-        >
-          <path d="M3.75 6.75H20.25M3.75 12H20.25M3.75 17.25H20.25"/>
-        </motion.svg>
+              duration,
+              ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}),
+            }}
+          >
+            <motion.path d="M3.75 6.75H20.25M3.75 12H20.25M3.75 17.25H20.25"
+              variants={GROUP_VARIANTS}
+              transition={{ ...{
+  staggerChildren: 0.06,
+  duration: 0.25,
+  ease: "easeInOut"
+}, duration, ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}) }}
+            />
+          </motion.g>
+        </svg>
       </div>
     );
   }

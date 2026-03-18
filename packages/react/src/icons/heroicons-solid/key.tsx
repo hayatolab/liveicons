@@ -16,7 +16,11 @@ const SVG_VARIANTS: Variants = {
     rotate: 0
   },
   animate: {
-    rotate: 90
+    rotate: [
+      0,
+      -45,
+      0
+    ]
   }
 };
 
@@ -38,10 +42,14 @@ const KeyIcon = forwardRef<LiveIconHandle, LiveIconProps>(
   ) => {
     const controls = useAnimation();
     const isControlledRef = useRef(false);
+    const hasPlayedOnceRef = useRef(false);
     const duration = resolveSpeed(speed); // applied to transition below
 
     useEffect(() => {
-      if (animate === "loop" || animate === "once") {
+      if (animate === "loop") {
+        controls.start("animate");
+      } else if (animate === "once" && !hasPlayedOnceRef.current) {
+        hasPlayedOnceRef.current = true;
         controls.start("animate");
       }
     }, [animate, controls]);
@@ -102,11 +110,11 @@ const KeyIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           transition={{
             ...{
   type: "spring",
-  stiffness: 200,
-  damping: 20
+  stiffness: 300,
+  damping: 18
 },
             duration,
-            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
+            ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}),
           }}
           variants={SVG_VARIANTS}
         >

@@ -1,12 +1,16 @@
 import type { AnimationDef } from "../types";
 
 export const animation: AnimationDef = {
-  target: "svg",
+  target: "group",
   variants: {
-    normal: { scale: 1, opacity: 1 },
-    animate: { scale: [1, 1.1, 0.95, 1], opacity: [1, 0.8, 1] },
+    normal: { pathLength: 0, opacity: 0 },
+    animate: { pathLength: 1, opacity: 1 },
   },
-  transition: { duration: 0.5, ease: "easeInOut" },
-  category: "action",
-  tags: ["wifi", "signal", "wireless", "network", "connectivity"],
+  transition: {
+    staggerChildren: 0.1,
+    duration: 0.3,
+    ease: "easeOut",
+  },
+  category: "feedback",
+  tags: ["wifi", "signal", "connection"],
 };

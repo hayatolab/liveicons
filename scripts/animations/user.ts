@@ -1,12 +1,13 @@
 import type { AnimationDef } from "../types";
 
 export const animation: AnimationDef = {
-  target: "svg",
+  target: "path",
+  pathIndex: [1],
   variants: {
-    normal: { scale: 1 },
-    animate: { scale: [1, 1.1, 1] },
+    normal: { y: 0 },
+    animate: { y: -3 },
   },
-  transition: { type: "spring", stiffness: 300, damping: 15 },
+  transition: { type: "spring", stiffness: 300, damping: 12 },
   category: "action",
-  tags: ["profile", "account", "person", "avatar"],
+  tags: ["user", "person", "profile"],
 };

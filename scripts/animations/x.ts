@@ -1,12 +1,16 @@
 import type { AnimationDef } from "../types";
 
 export const animation: AnimationDef = {
-  target: "svg",
+  target: "group",
   variants: {
-    normal: { rotate: 0, scale: 1 },
-    animate: { rotate: 90, scale: [1, 1.1, 1] },
+    normal: { pathLength: 0, opacity: 0 },
+    animate: { pathLength: 1, opacity: 1 },
   },
-  transition: { type: "spring", stiffness: 300, damping: 20 },
+  transition: {
+    staggerChildren: 0.08,
+    duration: 0.25,
+    ease: "easeOut",
+  },
   category: "action",
-  tags: ["close", "clear", "dismiss", "cancel", "remove"],
+  tags: ["close", "remove", "cancel"],
 };

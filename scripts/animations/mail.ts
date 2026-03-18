@@ -1,12 +1,13 @@
 import type { AnimationDef } from "../types";
 
 export const animation: AnimationDef = {
-  target: "svg",
+  target: "path",
+  pathIndex: [0],
   variants: {
     normal: { y: 0 },
-    animate: { y: [0, -3, 0] },
+    animate: { y: -3 },
   },
-  transition: { type: "spring", stiffness: 400, damping: 15 },
+  transition: { type: "spring", stiffness: 300, damping: 15 },
   category: "action",
-  tags: ["email", "message", "inbox", "envelope"],
+  tags: ["email", "message", "envelope"],
 };

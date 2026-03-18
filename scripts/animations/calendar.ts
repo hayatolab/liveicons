@@ -1,9 +1,13 @@
 import type { AnimationDef } from "../types";
+
 export const animation: AnimationDef = {
-  target: "svg",
+  target: "path",
+  pathIndex: [0, 1],
   variants: {
-    normal: {},
-    animate: { scale: [1, 1.1, 1] },
+    normal: { y: 0 },
+    animate: { y: -4 },
   },
-  transition: { type: "spring", stiffness: 300, damping: 20, mass: 0.8 },
+  transition: { type: "spring", stiffness: 300, damping: 12 },
+  category: "action",
+  tags: ["calendar", "date", "schedule"],
 };

@@ -145,4 +145,5 @@ ref.current?.startAnimation()  // e.g. on new notification
 ## Related skills
 
 - `create-animated-icon` — after picking the icon, use this to add a new animation def
+- `svg-animation-techniques` — SVG animation theory (path drawing, morphing, transforms) for designing creative animations
 - `references/semantic-map.md` — motion patterns by icon category

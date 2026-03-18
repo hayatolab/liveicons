@@ -19,15 +19,15 @@ const SVG_VARIANTS: Variants = {
   animate: {
     x: [
       0,
-      2,
-      0,
-      -2,
+      1,
+      -1,
+      1,
       0
     ],
     y: [
       0,
-      -2,
-      0,
+      -1,
+      1,
       -1,
       0
     ]
@@ -52,10 +52,14 @@ const PencilIcon = forwardRef<LiveIconHandle, LiveIconProps>(
   ) => {
     const controls = useAnimation();
     const isControlledRef = useRef(false);
+    const hasPlayedOnceRef = useRef(false);
     const duration = resolveSpeed(speed); // applied to transition below
 
     useEffect(() => {
-      if (animate === "loop" || animate === "once") {
+      if (animate === "loop") {
+        controls.start("animate");
+      } else if (animate === "once" && !hasPlayedOnceRef.current) {
+        hasPlayedOnceRef.current = true;
         controls.start("animate");
       }
     }, [animate, controls]);
@@ -119,11 +123,11 @@ const PencilIcon = forwardRef<LiveIconHandle, LiveIconProps>(
           strokeLinejoin="round"
           transition={{
             ...{
-  duration: 0.5,
+  duration: 0.3,
   ease: "easeInOut"
 },
             duration,
-            ...(animate === "loop" ? { repeat: Infinity, repeatType: "loop" as const } : {}),
+            ...(animate === "loop" ? { repeat: Infinity, repeatType: "reverse" as const } : {}),
           }}
           variants={SVG_VARIANTS}
         >

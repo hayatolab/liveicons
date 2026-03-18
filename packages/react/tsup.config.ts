@@ -19,6 +19,8 @@ const sourceEntries = Object.fromEntries(
   sourceDirs.map((s) => [`react/${s}/index`, `src/icons/${s}/index.ts`])
 );
 
+const isWatch = process.argv.includes("--watch");
+
 export default defineConfig([
   // Main package entry: ESM + CJS (small, just re-exports lucide + types)
   {
@@ -27,7 +29,7 @@ export default defineConfig([
       "react/morphing/index": "src/morphing/index.ts",
     },
     format: ["esm", "cjs"],
-    dts: true,
+    dts: !isWatch,
     clean: true,
     external: ["react", "react-dom", "motion"],
     esbuildOptions(options) {
@@ -38,7 +40,7 @@ export default defineConfig([
   {
     entry: sourceEntries,
     format: ["esm"],
-    dts: true,
+    dts: !isWatch,
     sourcemap: false,
     external: ["react", "react-dom", "motion"],
     esbuildOptions(options) {

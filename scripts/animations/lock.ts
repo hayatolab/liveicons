@@ -1,12 +1,13 @@
 import type { AnimationDef } from "../types";
 
 export const animation: AnimationDef = {
-  target: "svg",
+  target: "path",
+  pathIndex: [1],
   variants: {
     normal: { y: 0 },
-    animate: { y: [0, -3, 0, -2, 0] },
+    animate: { y: -6 },
   },
-  transition: { duration: 0.4 },
+  transition: { type: "spring", stiffness: 300, damping: 15 },
   category: "action",
-  tags: ["secure", "password", "protected", "closed"],
+  tags: ["lock", "security", "unlock"],
 };

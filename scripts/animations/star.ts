@@ -1,15 +1,13 @@
 import type { AnimationDef } from "../types";
 
 export const animation: AnimationDef = {
-  target: "svg",
+  target: "path",
+  pathIndex: [0],
   variants: {
-    normal: { scale: 1, rotate: 0 },
-    animate: {
-      scale: [1, 1.2, 1],
-      rotate: [0, 15, -15, 0],
-    },
+    normal: { pathLength: 0, opacity: 0, scale: 0.8 },
+    animate: { pathLength: 1, opacity: 1, scale: 1 },
   },
-  transition: { duration: 0.5, ease: "easeInOut" },
+  transition: { duration: 0.4, ease: "easeOut" },
   category: "feedback",
-  tags: ["rating", "favorite", "bookmark", "award", "review"],
+  tags: ["star", "favorite", "rate"],
 };

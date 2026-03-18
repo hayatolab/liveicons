@@ -1,12 +1,13 @@
 import type { AnimationDef } from "../types";
 
 export const animation: AnimationDef = {
-  target: "svg",
+  target: "path",
+  pathIndex: [1],
   variants: {
-    normal: { x: 0, y: 0 },
-    animate: { x: [0, 0, -3, 0], y: [0, -4, 0, 0] },
+    normal: { scale: 1 },
+    animate: { scale: 1.15 },
   },
-  transition: { duration: 0.6, bounce: 0.3 },
+  transition: { type: "spring", stiffness: 300, damping: 15 },
   category: "action",
-  tags: ["find", "lookup", "magnifier", "query"],
+  tags: ["search", "find", "magnify"],
 };
